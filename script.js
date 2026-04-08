@@ -1,5 +1,5 @@
 // Replace this with YOUR actual Apps Script Web App URL
-const API_URL = 'https://script.google.com/macros/s/AKfycbwnnQDlgF7GAVSCa1N3_0DmZJiOV-p2IfOqAH-zPZrboSs9UxqIbWmngr1hwpPUT1Uc/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyBe0X8nhU7oOtJJIn5mrAbXeDzuv5cfCbY8h1HYzSeaIRDnOEx9SdXbDWRaTfDCfpX/exec';
 
 async function fetchLeaderboard() {
     const loadingEl = document.getElementById('loading');
