@@ -1,4 +1,4 @@
-const API_BASE = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+const API_BASE = 'https://script.google.com/macros/s/AKfycbyBe0X8nhU7oOtJJIn5mrAbXeDzuv5cfCbY8h1HYzSeaIRDnOEx9SdXbDWRaTfDCfpX/exec';
 
 async function loadActiveGames() {
     const container = document.getElementById('games-container');
