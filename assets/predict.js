@@ -6,7 +6,7 @@ async function loadActiveGames() {
         const response = await fetch(`${API_BASE}?action=getActiveGames`);
         const games = await response.json();
         
-        if (!games || games.length === 0) {
+        if (!games || games.length === 0, 'TBD') {
             container.innerHTML = '<p>No active games available for picking right now. Check back soon!</p>';
             return;
         }
