@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Your Picks | NSR Playoffs</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="predict.html" class="active">Make Picks</a>
+        <a href="leaderboard.html">Leaderboard</a>
+    </nav>
+    <div class="container">
+        <h1>📝 Submit Your Predictions</h1>
+        <p class="subtitle">Pick the winner and series length for each active series.</p>
+        
+        <div id="message" class="message hidden"></div>
+        
+        <form id="pick-form">
+            <div class="form-group">
+                <label for="playerName">Your Name *</label>
+                <input type="text" id="playerName" name="playerName" required 
+                       placeholder="Enter your name" autocomplete="off">
+            </div>
+            
+            <div id="games-container">
+                <!-- Games will be dynamically inserted here -->
+                <p class="loading">Loading available games...</p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit Picks</button>
+        </form>
+        
+        <p class="note"><small>* You can update picks by submitting again with the same name. Your latest pick for each game will count.</small></p>
+    </div>
+    <script src="assets/predict.js"></script>
+</body>
+</html>

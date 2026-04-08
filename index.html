@@ -1,41 +1,34 @@
-<!--leaderboard---> 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSR PICKEMS</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NSR NBA Playoff Pick'ems</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>NSR NBA PLAYOFF PICKEMS</h1>
-        <p class="subtitle">Live Leaderboard</p>
-        
-        <div id="loading">Loading standings...</div>
-        
-        <table id="leaderboard-table" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Points</th>
-                    <th>Tiebreaker Diff</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard-body">
-                <!-- JavaScript will fill this -->
-            </tbody>
-        </table>
-        
-        <div class="footer">
-            <p>⬇️ Submit your picks below ⬇️</p>
-            <!-- We'll embed the Google Form here in Step 3 -->
-            <a href="https://www.twitch.tv/syanne" class="btn" id="pick-link" target="_blank">Submit Picks</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="predict.html">Make Picks</a>
+        <a href="leaderboard.html">Leaderboard</a>
+    </nav>
+    <div class="container home-container">
+        <h1>🏀 NSR NBA Playoff Pick'ems</h1>
+        <p class="tagline">Predict winners. Guess the series length. Climb the ranks.</p>
+        <div class="button-group">
+            <a href="predict.html" class="btn btn-primary">Make Your Picks</a>
+            <a href="leaderboard.html" class="btn btn-secondary">View Leaderboard</a>
+        </div>
+        <div class="rules-preview">
+            <h2>How Scoring Works</h2>
+            <ul>
+                <li><strong>Round 1:</strong> 100 pts per correct winner + 50 bonus for exact series length</li>
+                <li><strong>Round 2:</strong> 250 pts + 100 bonus</li>
+                <li><strong>Conf Finals:</strong> 750 pts + 150 bonus</li>
+                <li><strong>Finals:</strong> 2000 pts + 250 bonus</li>
+            </ul>
         </div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="assets/main.js"></script>
 </body>
 </html>

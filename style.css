@@ -1,86 +1,171 @@
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #eee;
-    margin: 0;
-    min-height: 100vh;
+/* Base styles (keep existing) plus these additions */
+nav {
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.container {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    padding: 30px;
-    width: 90%;
-    max-width: 700px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+nav a {
+    color: #a0a0c0;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+nav a:hover, nav a.active {
+    color: white;
+    border-bottom-color: #e94560;
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid #e94560;
+    color: #e94560;
+}
+
+.btn-secondary:hover {
+    background: #e94560;
+    color: white;
+}
+
+.btn-small {
+    background: #0f3460;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #ccc;
+}
+
+.form-group input {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 16px;
+}
+
+.game-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.subtitle {
-    text-align: center;
-    color: #a0a0c0;
-    margin-top: 0;
-    margin-bottom: 30px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-th {
-    background: #0f3460;
-    color: white;
-    padding: 12px;
-    font-weight: 600;
-    text-align: left;
-}
-
-td {
-    padding: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.03);
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.btn {
-    display: inline-block;
-    background: #e94560;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-.btn:hover {
-    background: #ff6b6b;
-}
-
-#loading {
-    text-align: center;
-    padding: 40px;
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
     color: #aaa;
+    font-size: 14px;
+}
+
+.pick-options {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.pick-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.series-length {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.series-length select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.message.success {
+    background: rgba(40, 167, 69, 0.2);
+    border: 1px solid #28a745;
+    color: #a3e9a4;
+}
+
+.message.error {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid #dc3545;
+    color: #f5c6cb;
+}
+
+.hidden {
+    display: none;
+}
+
+.search-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.3);
+    color: white;
+}
+
+.your-position {
+    background: rgba(233, 69, 96, 0.15);
+    border-left: 4px solid #e94560;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 0 8px 8px 0;
+}
+
+.highlight-row {
+    background: rgba(233, 69, 96, 0.2) !important;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .button-group { flex-direction: column; }
+    nav { flex-wrap: wrap; gap: 15px; }
 }
