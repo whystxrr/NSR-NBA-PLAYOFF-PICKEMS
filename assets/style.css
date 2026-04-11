@@ -9,7 +9,7 @@ nav {
 }
 
 nav a {
-    color: #a0a0c0;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 500;
     padding: 5px 0;
@@ -18,8 +18,8 @@ nav a {
 }
 
 nav a:hover, nav a.active {
-    color: white;
-    border-bottom-color: #e94560;
+    color: rgb(0, 0, 0);
+    border-bottom-color: #ffffff;
 }
 
 .button-group {
