@@ -36,6 +36,11 @@ nav a.active {
     margin: 40px 0;
 }
 
+.btn-primary {
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+}
 /* Secondary button: transparent with white border */
 .btn-secondary {
     background: transparent;
