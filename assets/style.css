@@ -1,4 +1,9 @@
 /* Base styles (keep existing) plus these additions */
+
+body {
+    background-color: #000000; 
+}
+
 nav {
     display: flex;
     justify-content: center;
@@ -19,7 +24,7 @@ nav a {
 
 nav a:hover, nav a.active {
     color: rgb(0, 0, 0);
-    border-bottom-color: #ffffff;
+    border-bottom-color: #000000;
 }
 
 .button-group {
@@ -37,12 +42,12 @@ nav a:hover, nav a.active {
 
 .btn-secondary:hover {
     background: #e94560;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .btn-small {
     background: #0f3460;
-    color: white;
+    color: rgb(0, 0, 0);
     border: none;
     padding: 8px 16px;
     border-radius: 20px;
