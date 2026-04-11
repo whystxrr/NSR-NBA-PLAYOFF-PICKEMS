@@ -1,7 +1,8 @@
-/* Base styles (keep existing) plus these additions */
+/* Black & white theme - background black, all elements white/gray */
 
 body {
-    background-color: #00000062; 
+    background-color: #000000; /* solid black */
+    color: #ffffff; /* base text white */
 }
 
 nav {
@@ -10,11 +11,11 @@ nav {
     gap: 30px;
     margin-bottom: 30px;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* white border */
 }
 
 nav a {
-    color: #000000;
+    color: #ffffff; /* white text */
     text-decoration: none;
     font-weight: 500;
     padding: 5px 0;
@@ -22,9 +23,10 @@ nav a {
     transition: all 0.2s;
 }
 
-nav a:hover, nav a.active {
-    color: rgb(0, 0, 0);
-    border-bottom-color: #000000;
+nav a:hover,
+nav a.active {
+    color: #ffffff;
+    border-bottom-color: #ffffff; /* white underline */
 }
 
 .button-group {
@@ -34,20 +36,22 @@ nav a:hover, nav a.active {
     margin: 40px 0;
 }
 
+/* Secondary button: transparent with white border */
 .btn-secondary {
     background: transparent;
-    border: 2px solid #e94560;
-    color: #e94560;
+    border: 2px solid #ffffff;
+    color: #ffffff;
 }
 
 .btn-secondary:hover {
-    background: #e94560;
-    color: rgb(0, 0, 0);
+    background: #ffffff;
+    color: #000000; /* black text on hover */
 }
 
+/* Small button: solid white background, black text */
 .btn-small {
-    background: #0f3460;
-    color: rgb(0, 0, 0);
+    background: #ffffff;
+    color: #000000;
     border: none;
     padding: 8px 16px;
     border-radius: 20px;
@@ -62,7 +66,7 @@ nav a:hover, nav a.active {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: #ccc;
+    color: #cccccc; /* light gray for labels */
 }
 
 .form-group input {
@@ -70,25 +74,25 @@ nav a:hover, nav a.active {
     max-width: 300px;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.3);
-    color: rgb(0, 0, 0);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1); /* faint white background */
+    color: #ffffff;
     font-size: 16px;
 }
 
 .game-card {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05); /* very faint white */
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .game-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
-    color: #aaa;
+    color: #bbbbbb; /* lighter gray */
     font-size: 14px;
 }
 
@@ -103,6 +107,7 @@ nav a:hover, nav a.active {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    color: #ffffff;
 }
 
 .series-length {
@@ -110,14 +115,15 @@ nav a:hover, nav a.active {
     display: flex;
     align-items: center;
     gap: 15px;
+    color: #ffffff;
 }
 
 .series-length select {
     padding: 8px 12px;
     border-radius: 6px;
-    background: rgba(0,0,0,0.4);
-    color: rgb(0, 0, 0);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .message {
@@ -126,16 +132,18 @@ nav a:hover, nav a.active {
     margin-bottom: 20px;
 }
 
+/* Success message – light gray/white theme */
 .message.success {
-    background: rgba(40, 167, 69, 0.2);
-    border: 1px solid #28a745;
-    color: #a3e9a4;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #ffffff;
+    color: #ffffff;
 }
 
+/* Error message – also white but could add subtle difference */
 .message.error {
-    background: rgba(220, 53, 69, 0.2);
-    border: 1px solid #dc3545;
-    color: #f5c6cb;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #cccccc;
+    color: #cccccc;
 }
 
 .hidden {
@@ -152,25 +160,31 @@ nav a:hover, nav a.active {
     flex: 1;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.3);
-    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
 }
 
 .your-position {
-    background: rgba(233, 69, 96, 0.15);
-    border-left: 4px solid #e94560;
+    background: rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #ffffff;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 0 8px 8px 0;
+    color: #ffffff;
 }
 
 .highlight-row {
-    background: rgba(233, 69, 96, 0.2) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
     font-weight: 500;
 }
 
 @media (max-width: 600px) {
-    .button-group { flex-direction: column; }
-    nav { flex-wrap: wrap; gap: 15px; }
+    .button-group {
+        flex-direction: column;
+    }
+    nav {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
 }
