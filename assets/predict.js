@@ -1,137 +1,192 @@
 const API_BASE = 'https://script.google.com/macros/s/AKfycbyBe0X8nhU7oOtJJIn5mrAbXeDzuv5cfCbY8h1HYzSeaIRDnOEx9SdXbDWRaTfDCfpX/exec';
 
-async function loadActiveGames() {
-    const container = document.getElementById('games-container');
-    try {
-        const response = await fetch(`${API_BASE}?action=getActiveGames`);
-        const games = await response.json();
-        
-        if (!games || games.length === 0, 'TBD') {
-            container.innerHTML = '<p>No active games available for picking right now. Check back soon!</p>';
-            return;
-        }
-        
-        container.innerHTML = '';
-        games.forEach(game => {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            card.innerHTML = `
-                <div class="game-header">
-                    <span class="round">${game.round}</span>
-                    <span class="points">Base: ${game.basePoints} pts + ${game.bonusPoints} bonus</span>
-                </div>
-                <div class="pick-options">
-                    <label>
-                        <input type="radio" name="pick_${game.gameId}" value="${game.teamA}" required>
-                        ${game.teamA}
-                    </label>
-                    <label>
-                        <input type="radio" name="pick_${game.gameId}" value="${game.teamB}" required>
-                        ${game.teamB}
-                    </label>
-                </div>
-                <div class="series-length">
-                    <label>Series length (games):</label>
-                    <select name="length_${game.gameId}" required>
-                        <option value="">-- Select --</option>
-                        <option value="4">4 games</option>
-                        <option value="5">5 games</option>
-                        <option value="6">6 games</option>
-                        <option value="7">7 games</option>
-                    </select>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    } catch (error) {
-        container.innerHTML = '<p class="error">Failed to load games. Please refresh.</p>';
-        console.error(error);
-    }
-}
+// NBA Playoff Teams for 2025-26 Season (placeholder - update as needed)
+const NBA_TEAMS = [
+    'Boston Celtics', 'Milwaukee Bucks', 'Philadelphia 76ers', 'Denver Nuggets',
+    'Golden State Warriors', 'Phoenix Suns', 'Dallas Mavericks', 'Los Angeles Lakers',
+    'Cleveland Cavaliers', 'New York Knicks', 'Miami Heat', 'Atlanta Hawks',
+    'LA Clippers', 'New Orleans Pelicans', 'Indiana Pacers', 'Orlando Magic'
+];
 
-document.getElementById('pick-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = document.getElementById('submit-btn');
-    const messageDiv = document.getElementById('message');
-    const playerName = document.getElementById('playerName').value.trim();
-    
-    if (!playerName) {
-        showMessage('Please enter your name.', 'error');
-        return;
-    }
-    
-    // Gather all picks
-    const games = document.querySelectorAll('.game-card');
-    const picks = [];
-    let isValid = true;
-    
-    games.forEach(card => {
-        const gameIdMatch = card.querySelector('[name^="pick_"]').name.match(/pick_(.+)/);
-        const gameId = gameIdMatch[1];
-        const pickRadio = card.querySelector(`input[name="pick_${gameId}"]:checked`);
-        const lengthSelect = card.querySelector(`select[name="length_${gameId}"]`);
-        
-        if (!pickRadio || !lengthSelect.value) {
-            isValid = false;
-            card.style.border = '1px solid #dc3545';
-        } else {
-            card.style.border = '1px solid rgba(255,255,255,0.1)';
-            picks.push({
-                gameId: gameId,
-                pick: pickRadio.value,
-                lengthGuess: parseInt(lengthSelect.value)
-            });
-        }
-    });
-    
-    if (!isValid) {
-        showMessage('Please complete all picks and series lengths.', 'error');
-        return;
-    }
-    
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-    
-    try {
-        // Submit each pick (you could batch them in one call with a modified script)
-        for (const pick of picks) {
-            const response = await fetch(API_BASE, {
-                method: 'POST',
-                mode: 'no-cors', // Required for Apps Script POST
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    playerName: playerName,
-                    gameId: pick.gameId,
-                    pick: pick.pick,
-                    lengthGuess: pick.lengthGuess
-                })
-            });
-            // Note: no-cors means we can't read response; assume success if no error
-        }
-        
-        showMessage(`✅ Picks submitted successfully for ${playerName}! Good luck!`, 'success');
-        document.getElementById('pick-form').reset();
-        // Store name in localStorage for convenience
-        localStorage.setItem('lastPlayerName', playerName);
-    } catch (error) {
-        showMessage('Submission failed. Please try again.', 'error');
-        console.error(error);
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Picks';
-    }
-});
+let config = null;
+let countdownInterval = null;
+
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+    document.getElementById(screenId).classList.remove('hidden');
+}
 
 function showMessage(text, type) {
     const msg = document.getElementById('message');
     msg.textContent = text;
     msg.className = `message ${type}`;
     msg.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    msg.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Pre-fill name if stored
-const lastName = localStorage.getItem('lastPlayerName');
-if (lastName) document.getElementById('playerName').value = lastName;
+function hideMessage() {
+    document.getElementById('message').classList.add('hidden');
+}
 
-loadActiveGames();
+async function fetchConfig() {
+    try {
+        const response = await fetch(`${API_BASE}?action=getConfig`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        config = await response.json();
+        return config;
+    } catch (error) {
+        console.error('Failed to fetch config:', error);
+        throw new Error('Unable to load voting configuration. Please check your connection and try again.');
+    }
+}
+
+function isVotingOpen() {
+    if (!config) return false;
+    const now = new Date();
+    const deadline = new Date(config.deadline);
+    return config.votingOpen && now <= deadline;
+}
+
+function startCountdown(elementId, targetDate) {
+    if (countdownInterval) clearInterval(countdownInterval);
+    
+    const target = new Date(targetDate);
+    const countdownEl = document.getElementById(elementId);
+    
+    function updateCountdown() {
+        const now = new Date();
+        const diff = target - now;
+        
+        if (diff <= 0) {
+            countdownEl.textContent = 'Voting Closed';
+            clearInterval(countdownInterval);
+            return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    
+    updateCountdown();
+    countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+function renderTeamSelector() {
+    const container = document.getElementById('team-selector');
+    container.innerHTML = '';
+    
+    NBA_TEAMS.forEach(team => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'team-button';
+        button.textContent = team;
+        button.dataset.team = team;
+        
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.team-button').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            document.getElementById('selected-team').value = team;
+        });
+        
+        container.appendChild(button);
+    });
+}
+
+function loadApp() {
+    showScreen('loading-screen');
+    
+    fetchConfig().then(() => {
+        if (!isVotingOpen()) {
+            showScreen('voting-closed-screen');
+            return;
+        }
+        
+        const submitted = localStorage.getItem('nba_prediction_submitted');
+        if (submitted) {
+            const data = JSON.parse(submitted);
+            document.getElementById('submitted-name').textContent = data.name;
+            document.getElementById('submitted-pick').textContent = data.pick;
+            document.getElementById('submitted-time').textContent = new Date(data.timestamp).toLocaleString();
+            startCountdown('countdown', config.deadline);
+            showScreen('already-submitted-screen');
+        } else {
+            renderTeamSelector();
+            startCountdown('countdown', config.deadline);
+            showScreen('form-screen');
+        }
+    }).catch(error => {
+        showScreen('voting-closed-screen');
+        document.querySelector('#voting-closed-screen .message').innerHTML = `
+            <p><strong>Error:</strong> ${error.message}</p>
+            <p>Please refresh the page to try again.</p>
+        `;
+    });
+}
+
+document.getElementById('pick-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideMessage();
+    
+    const name = document.getElementById('playerName').value.trim();
+    const pick = document.getElementById('selected-team').value;
+    
+    if (!name) {
+        showMessage('Please enter your full name.', 'error');
+        return;
+    }
+    
+    if (!pick) {
+        showMessage('Please select a team.', 'error');
+        return;
+    }
+    
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    
+    showScreen('submitting-screen');
+    
+    const payload = {
+        name: name,
+        pick: pick,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+    };
+    
+    try {
+        const response = await fetch(`${API_BASE}?action=submitPick`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) throw new Error(`Submission failed: ${response.status}`);
+        
+        // Success
+        localStorage.setItem('nba_prediction_submitted', JSON.stringify({
+            name: name,
+            pick: pick,
+            timestamp: payload.timestamp
+        }));
+        
+        document.getElementById('success-name').textContent = name;
+        document.getElementById('success-pick').textContent = pick;
+        document.getElementById('success-time').textContent = new Date(payload.timestamp).toLocaleString();
+        
+        showScreen('success-screen');
+        
+    } catch (error) {
+        console.error('Submission error:', error);
+        showScreen('form-screen');
+        showMessage('Failed to submit prediction. Please check your connection and try again.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Prediction';
+    }
+});
+
+// Initialize app
+loadApp();

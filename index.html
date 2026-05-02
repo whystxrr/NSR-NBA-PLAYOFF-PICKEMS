@@ -3,32 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSR NBA Playoff Pick'ems</title>
+    <title>NBA Playoffs Prediction | Who Takes The Trophy?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="predict.html">Make Picks</a>
-        <a href="leaderboard.html">Leaderboard</a>
-    </nav>
-    <div class="container home-container">
-        <h1>🏀 NSR NBA Playoff Pick'ems</h1>
-        <p class="tagline">Predict winners. Guess the series length. Climb the ranks.</p>
-        <div class="button-group">
-            <a href="predict.html" class="btn btn-primary">Make Your Picks</a>
-            <a href="leaderboard.html" class="btn btn-secondary">View Leaderboard</a>
+    <div id="loading-screen" class="screen">
+        <div class="hero">
+            <h1>🏀 Who Takes The Trophy?</h1>
+            <p class="tagline">Make your championship prediction</p>
         </div>
-        <div class="rules-preview">
-            <h2>How Scoring Works</h2>
-            <ul>
-                <li><strong>Round 1:</strong> 100 pts per correct winner + 50 bonus for exact series length</li>
-                <li><strong>Round 2:</strong> 250 pts + 100 bonus</li>
-                <li><strong>Conf Finals:</strong> 750 pts + 150 bonus</li>
-                <li><strong>Finals:</strong> 2000 pts + 250 bonus</li>
-            </ul>
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <div id="voting-closed-screen" class="screen hidden">
+        <div class="hero">
+            <h1>🏀 Voting Closed</h1>
+            <p class="tagline">The prediction window has ended</p>
+        </div>
+        <div class="message info">
+            <p>Voting is now closed. Check back next season!</p>
         </div>
     </div>
-    <script src="assets/main.js"></script>
+
+    <div id="already-submitted-screen" class="screen hidden">
+        <div class="hero">
+            <h1>🏀 Your Prediction</h1>
+            <p class="tagline">You've already made your call</p>
+        </div>
+        <div class="confirmation-card">
+            <h2 id="submitted-name"></h2>
+            <p class="pick-display">Predicted Champion: <span id="submitted-pick" class="highlight"></span></p>
+            <p class="timestamp">Submitted on <span id="submitted-time"></span></p>
+        </div>
+        <div id="countdown-container">
+            <h3>Time Remaining</h3>
+            <div id="countdown" class="countdown"></div>
+        </div>
+    </div>
+
+    <div id="form-screen" class="screen hidden">
+        <div class="hero">
+            <h1>🏀 Who Takes The Trophy?</h1>
+            <p class="tagline">Pick your NBA champion</p>
+        </div>
+        <div id="countdown-container">
+            <h3>Voting Ends In</h3>
+            <div id="countdown" class="countdown"></div>
+        </div>
+        <div id="message" class="message hidden"></div>
+        <form id="pick-form">
+            <div class="form-group">
+                <label for="playerName">Your Full Name *</label>
+                <input type="text" id="playerName" name="playerName" required 
+                       placeholder="Enter your full name" autocomplete="off">
+            </div>
+            
+            <div class="form-group">
+                <label>Pick Your Champion *</label>
+                <div id="team-selector" class="team-grid">
+                    <!-- Teams will be dynamically inserted here -->
+                </div>
+                <input type="hidden" id="selected-team" name="pick" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit Prediction</button>
+        </form>
+    </div>
+
+    <div id="submitting-screen" class="screen hidden">
+        <div class="hero">
+            <h1>🏀 Submitting...</h1>
+            <p class="tagline">Please wait</p>
+        </div>
+        <div class="loading-spinner"></div>
+        <p>Submitting your prediction...</p>
+    </div>
+
+    <div id="success-screen" class="screen hidden">
+        <div class="hero">
+            <h1>🏀 Prediction Submitted!</h1>
+            <p class="tagline">Good luck!</p>
+        </div>
+        <div class="confirmation-card">
+            <h2 id="success-name"></h2>
+            <p class="pick-display">Predicted Champion: <span id="success-pick" class="highlight"></span></p>
+            <p class="timestamp">Submitted on <span id="success-time"></span></p>
+        </div>
+        <div class="message success">
+            <p>Your prediction has been recorded. May the best team win!</p>
+        </div>
+    </div>
+
+    <script src="assets/predict.js"></script>
 </body>
 </html>

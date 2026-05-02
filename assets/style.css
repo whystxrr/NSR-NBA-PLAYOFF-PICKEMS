@@ -1,195 +1,287 @@
-/* Black & white theme - background black, all elements white/gray */
+/* Dark Navy Theme with Neon Orange Accents */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg-primary: #0a0f1e;
+    --bg-secondary: #111827;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e7eb;
+    --accent: #FF6B35;
+    --accent-hover: #e55a2b;
+    --border: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
-    background-color: #000000; /* solid black */
-    color: #ffffff; /* base text white */
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 
-nav {
+.screen {
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 30px;
-    margin-bottom: 30px;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* white border */
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
 }
 
-nav a {
-    color: #ffffff; /* white text */
-    text-decoration: none;
+.hero {
+    margin-bottom: 2rem;
+}
+
+.hero h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.message {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin: 1rem 0;
     font-weight: 500;
-    padding: 5px 0;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
 }
 
-nav a:hover,
-nav a.active {
-    color: #ffffff;
-    border-bottom-color: #ffffff; /* white underline */
+.message.success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #22c55e;
 }
 
-.button-group {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin: 40px 0;
+.message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
 }
 
-.btn-primary {
-    background: transparent;
-    border: 2px solid #ffffff;
-    color: #ffffff;
-}
-/* Secondary button: transparent with white border */
-.btn-secondary {
-    background: transparent;
-    border: 2px solid #ffffff;
-    color: #ffffff;
+.message.info {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
 }
 
-.btn-secondary:hover {
-    background: #ffffff;
-    color: #000000; /* black text on hover */
+.hidden {
+    display: none !important;
 }
 
-/* Small button: solid white background, black text */
-.btn-small {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
+.confirmation-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    max-width: 500px;
+    width: 100%;
+}
+
+.confirmation-card h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.pick-display {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.timestamp {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+#countdown-container {
+    margin: 2rem 0;
+}
+
+#countdown-container h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.countdown {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    color: var(--accent);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    display: inline-block;
+    min-width: 300px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    width: 100%;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     font-weight: 500;
-    color: #cccccc; /* light gray for labels */
+    color: var(--text-primary);
+    font-size: 1.1rem;
 }
 
-.form-group input {
+.form-group input[type="text"] {
     width: 100%;
-    max-width: 300px;
-    padding: 12px;
+    padding: 1rem;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1); /* faint white background */
-    color: #ffffff;
-    font-size: 16px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
 }
 
-.game-card {
-    background: rgba(255, 255, 255, 0.05); /* very faint white */
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.team-button {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.game-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    color: #bbbbbb; /* lighter gray */
-    font-size: 14px;
-}
-
-.pick-options {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.pick-options label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    padding: 1rem;
     cursor: pointer;
-    color: #ffffff;
-}
-
-.series-length {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: #ffffff;
-}
-
-.series-length select {
-    padding: 8px 12px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.message {
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-/* Success message – light gray/white theme */
-.message.success {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #ffffff;
-    color: #ffffff;
-}
-
-/* Error message – also white but could add subtle difference */
-.message.error {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid #cccccc;
-    color: #cccccc;
-}
-
-.hidden {
-    display: none;
-}
-
-.search-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.search-section input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-}
-
-.your-position {
-    background: rgba(255, 255, 255, 0.08);
-    border-left: 4px solid #ffffff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 0 8px 8px 0;
-    color: #ffffff;
-}
-
-.highlight-row {
-    background: rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+    position: relative;
 }
 
-@media (max-width: 600px) {
-    .button-group {
-        flex-direction: column;
+.team-button:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+}
+
+.team-button.selected {
+    border-color: var(--accent);
+    background: rgba(255, 107, 53, 0.1);
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3);
+}
+
+.team-button.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--accent);
+}
+
+@media (max-width: 768px) {
+    .screen {
+        padding: 1rem;
     }
-    nav {
-        flex-wrap: wrap;
-        gap: 15px;
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .confirmation-card {
+        padding: 1.5rem;
+    }
+    
+    .countdown {
+        font-size: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        min-width: 250px;
     }
 }

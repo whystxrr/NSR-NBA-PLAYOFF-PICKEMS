@@ -8,7 +8,7 @@ async function fetchLeaderboard() {
     const tbody = document.getElementById('leaderboard-body');
     
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}?action=getLeaderboard`);
         fullLeaderboard = await response.json();
         
         if (fullLeaderboard.length === 0) {
@@ -22,12 +22,13 @@ async function fetchLeaderboard() {
         renderTable(fullLeaderboard);
         setupSearch();
         
-        // Try to find user's last used name
-        const lastName = localStorage.getItem('lastPlayerName');
-        if (lastName) {
-            document.getElementById('searchInput').value = lastName;
-            filterTable(lastName);
-            highlightUserPosition(lastName);
+        // Try to find user's prediction
+        const submitted = localStorage.getItem('nba_prediction_submitted');
+        if (submitted) {
+            const data = JSON.parse(submitted);
+            document.getElementById('searchInput').value = data.name;
+            filterTable(data.name);
+            highlightUserPosition(data.name);
         }
     } catch (error) {
         loadingEl.textContent = 'Error loading leaderboard. Please try again later.';

@@ -1,1 +1,46 @@
-Andy is chopped!
+# NBA Playoffs Prediction App
+
+A single-page web application for predicting the NBA champion with a beautiful dark theme and neon accents.
+
+## Features
+
+- **One Prediction Per User**: Users can submit only one prediction, stored in localStorage
+- **Voting Window Control**: Admin-controlled voting period via Google Sheets
+- **Real-time Countdown**: Live countdown timer to voting deadline
+- **Creative Team Selector**: Grid-based team selection UI
+- **Responsive Design**: Mobile-first design with dark navy background and neon orange accents
+
+## Setup
+
+1. Deploy the HTML/CSS/JS files to Vercel
+2. Set up Google Apps Script Web App with the following endpoints:
+   - `?action=getConfig` - Returns `{votingOpen: boolean, deadline: "ISO string"}`
+   - `?action=submitPick` - Accepts POST JSON `{name, pick, timestamp, userAgent}`
+   - `?action=getLeaderboard` - Returns array of leaderboard entries
+
+3. Update the `API_BASE` constant in `assets/predict.js` and `assets/leaderboard.js` with your Apps Script URL
+
+## Google Sheets Configuration
+
+Create a config tab with:
+- Cell A1: VOTING_OPEN (TRUE/FALSE)
+- Cell B1: VOTING_DEADLINE (ISO timestamp, e.g., 2025-06-01T23:59:00Z)
+
+## Files
+
+- `index.html` - Main prediction app
+- `leaderboard.html` - Leaderboard page
+- `assets/style.css` - Styling with dark theme
+- `assets/predict.js` - Prediction logic
+- `assets/leaderboard.js` - Leaderboard logic
+
+## Fonts
+
+- Bebas Neue for headings
+- Inter for body text
+
+## Colors
+
+- Background: #0a0f1e (deep navy)
+- Accent: #FF6B35 (neon orange)
+- Text: #ffffff (white)
